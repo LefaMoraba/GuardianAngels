@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guardian_angels/pages/gaurdian_sign_up.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -24,7 +25,32 @@ class WelcomeScreen extends StatelessWidget {
               'Welcome!',
               style: Theme.of(context).textTheme.displayMedium,
             ),
+            
           ),
+          GestureDetector(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                          MaterialPageRoute(
+                            builder: (context) => GaurdianSignUp()),
+                            (route) => false);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                          child: Text(
+                        "Sign up to be Gaurdian",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      )),
+                    ),
+          )    
+
         ],
       ),
     );
