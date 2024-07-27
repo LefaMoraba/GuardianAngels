@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/login_page.dart';
 import 'package:guardian_angels/pages/welcome_page.dart';
+import 'package:guardian_angels/Decoration/navigation.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -39,7 +40,7 @@ class _SignUpScreenState extends State<SignUpPage> {
       setState(() {
         _fNameError = 'Enter a valid name';
       });
-    }  else if (name.length < 2) {
+    } else if (name.length < 2) {
       setState(() {
         _fNameError = 'Name must be at least 2 characters';
       });
@@ -60,7 +61,7 @@ class _SignUpScreenState extends State<SignUpPage> {
       setState(() {
         _lNameError = 'Enter a valid surname';
       });
-    }  else if (surname.length < 2) {
+    } else if (surname.length < 2) {
       setState(() {
         _lNameError = 'Surname must be at least 2 characters';
       });
@@ -103,7 +104,6 @@ class _SignUpScreenState extends State<SignUpPage> {
       });
     }
   }
-
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -248,10 +248,9 @@ class _SignUpScreenState extends State<SignUpPage> {
                   GestureDetector(
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
-                        context,
-                          MaterialPageRoute(
-                            builder: (context) => WelcomeScreen()),
-                            (route) => false);
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                          (route) => false);
                     },
                     child: Container(
                       width: double.infinity,

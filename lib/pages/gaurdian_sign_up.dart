@@ -54,6 +54,7 @@ class _GaurduanScreenState extends State<GaurdianSignUp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: Text('Sign Up to be a Guardian'),

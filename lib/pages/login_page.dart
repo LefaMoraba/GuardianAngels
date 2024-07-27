@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/sign_up_page.dart';
 import 'package:guardian_angels/pages/welcome_page.dart';
+import 'package:guardian_angels/Decoration/navigation.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -161,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.pushAndRemoveUntil(
                         context,
                           MaterialPageRoute(
-                            builder: (context) => WelcomeScreen()),
+                            builder: (context) => HomeScreen()),
                             (route) => false);
                     },
                     child: Container(
