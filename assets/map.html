@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <link href="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+      body { margin: 0; }
+      #map { height: 100vh; }
+    </style>
+  </head>
+  <body>
+    <div id="map" />
+    <script src="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.js"></script>
+    <script>
+      const apiKey = "v1.public.eyJqdGkiOiJlMDFjNTlmZi1iMDQ0LTRkNTctOTFmMi0wMDQzZjA5Y2ZjNjIifSMHWOQwor-91Ctjf_xnqmpC6b3YX34ds3MPi2dqZt1EQK33nig-E9dnaCFR2o79ygfp8Ab3aC1nR8Lr8FYhjZ-PeeTtuD1yI7a0hQ1ehGFbp7ccgihAKGgiULsnr3Qzot4jQBQDFOJHt4jgKNvwD7PYAHYPL8HL_1kJo-qJ_k7xc5ckJ3HbderDfUDxyrmmLGO-H9THY9Fhz4S6aN_xmHU8FGRG611wcslj4dLWcvulf-_xprQu6olgxtgXJZRKgrjisbwwQuaoq5IEs7nIO8NvdpfpaMtjW6WndE4w0r8QCeIOk3mDNV6TRCHtF0hONyJ4UtLT5bah6gys1CaYAdA.ZWU0ZWIzMTktMWRhNi00Mzg0LTllMzYtNzlmMDU3MjRmYTkx";
+      const mapName = "Map";
+      const region = "us-east-1";
+
+      const map = new maplibregl.Map({
+        container: "map",
+        style: `https://maps.geo.${region}.amazonaws.com/maps/v0/maps/${mapName}/style-descriptor?key=${apiKey}`,
+        center: [-123.115898, 49.295868],
+        zoom: 11,
+      });
+      map.addControl(new maplibregl.NavigationControl(), "top-left");
+    </script>
+  </body>
+</html>

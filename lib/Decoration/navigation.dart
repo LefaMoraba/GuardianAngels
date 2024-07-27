@@ -5,6 +5,7 @@ import 'package:guardian_angels/pages/donation.dart';
 import 'package:guardian_angels/pages/gaurdian_sign_up.dart';
 import 'package:guardian_angels/pages/homepage.dart';
 import 'package:guardian_angels/pages/profile.dart';
+//import 'package:guardian_angels/pages/welcome_screen.dart'; // Import the new WelcomeScreen
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Widget _currentScreen = const WelcomeScreen(); // Default screen
+  Widget _currentScreen =  WelcomeScreen(); // Default screen is the WelcomeScreen
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Home",
             onTap: () {
               setState(() {
-                _currentScreen = const WelcomeScreen();
+                _currentScreen =  WelcomeScreen(); // Navigate to WelcomeScreen
               });
             },
           ),
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Guardian Programme",
             onTap: () {
               setState(() {
-                _currentScreen = const GaurdianSignUp();
+                _currentScreen = const GaurdianSignUp(); // Navigate to GaurdianSignUp
               });
             },
           ),
@@ -45,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Profile",
             onTap: () {
               setState(() {
-                _currentScreen = const ProfileScreen();
+                _currentScreen = ProfilePage(); // Navigate to ProfilePage
               });
             },
           ),
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Donation",
             onTap: () {
               setState(() {
-                _currentScreen = const DonationScreen();
+                _currentScreen = const DonationScreen(); // Navigate to DonationScreen
               });
             },
           ),
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "About Us",
             onTap: () {
               setState(() {
-                _currentScreen = const AboutUsScreen();
+                _currentScreen = const AboutUsScreen(); // Navigate to AboutUsScreen
               });
             },
           ),
