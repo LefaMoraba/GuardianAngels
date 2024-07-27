@@ -5,6 +5,9 @@ import 'package:guardian_angels/features/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
+  //print("Configuring Amplify"); 
+  //configureAmplify(); 
+  //print("Configured Amplify"); 
 }
 
 class MyApp extends StatelessWidget {

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/login_page.dart';
 import 'package:guardian_angels/pages/welcome_page.dart';
 import 'package:guardian_angels/Decoration/navigation.dart';
+//import 'package:amplify_flutter/amplify.dart';
+//import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
+import 'package:amazon_cognito_identity_dart_2/sig_v4.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -35,8 +39,7 @@ class _SignUpScreenState extends State<SignUpPage> {
       setState(() {
         _fNameError = 'Name is required';
       });
-    } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-        .hasMatch(name)) {
+    } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(name)) {
       setState(() {
         _fNameError = 'Enter a valid name';
       });
@@ -56,8 +59,7 @@ class _SignUpScreenState extends State<SignUpPage> {
       setState(() {
         _lNameError = 'Surname is required';
       });
-    } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-        .hasMatch(surname)) {
+    } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(surname)) {
       setState(() {
         _lNameError = 'Enter a valid surname';
       });
@@ -77,8 +79,7 @@ class _SignUpScreenState extends State<SignUpPage> {
       setState(() {
         _emailError = 'Email is required';
       });
-    } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-        .hasMatch(email)) {
+    } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(email)) {
       setState(() {
         _emailError = 'Enter a valid email address';
       });
@@ -129,12 +130,40 @@ class _SignUpScreenState extends State<SignUpPage> {
     });
   }
 
+  final userPool = CognitoUserPool(
+    'us-west-1_S65cJX68p',
+    '5176idlu4cdrdj9vvuv1rc5ip7',
+  );
+
+  Future<void> signup(String name, String surname, String email, String password) async {
+    final userAttributes = [
+      AttributeArg(name: 'given_name', value: name),
+      AttributeArg(name: 'family_name', value: surname),
+    ];
+
+    try {
+      await userPool.signUp(email, password, userAttributes: userAttributes);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
+      );
+    } catch (e) {
+      _showErrorDialog('An error occurred during sign-up: $e');
+    }
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      signup(_fNameController.text, _lNameController.text, _emailController.text, _passwordController.text);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign Up Page'),
-        // backgroundColor: Colors.deepOrange, // appbar color.
         foregroundColor: Colors.white,
       ),
       body: Center(
@@ -164,11 +193,9 @@ class _SignUpScreenState extends State<SignUpPage> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'First Name is required';
-                      } else if (!RegExp(
-                              r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                          .hasMatch(value)) {
+                      } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
                         return 'Enter a valid first name';
-                      } else if (value.length < 6) {
+                      } else if (value.length < 2) {
                         return 'First name must be at least 2 characters';
                       }
                       return null;
@@ -185,11 +212,9 @@ class _SignUpScreenState extends State<SignUpPage> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Last name is required';
-                      } else if (!RegExp(
-                              r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                          .hasMatch(value)) {
+                      } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
                         return 'Enter a valid last name';
-                      } else if (value.length < 6) {
+                      } else if (value.length < 2) {
                         return 'Last name must be at least 2 characters';
                       }
                       return null;
@@ -206,9 +231,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Email is required';
-                      } else if (!RegExp(
-                              r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                          .hasMatch(value)) {
+                      } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
                         return 'Enter a valid email address';
                       }
                       return null;
@@ -224,9 +247,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                     decoration: InputDecoration(
                       labelText: 'Password',
                       suffixIcon: IconButton(
-                        icon: _obscureText
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off),
+                        icon: _obscureText ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
                         onPressed: _togglePasswordVisibility,
                       ),
                     ),
@@ -246,12 +267,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   SizedBox(height: 20),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                          (route) => false);
-                    },
+                    onTap: _submitForm,
                     child: Container(
                       width: double.infinity,
                       height: 45,
@@ -260,39 +276,34 @@ class _SignUpScreenState extends State<SignUpPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
-                          child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )),
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("Already have an account?"),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      SizedBox(width: 5),
                       GestureDetector(
-                          onTap: () {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()),
-                                (route) => false);
-                          },
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ))
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginPage()),
+                            (route) => false,
+                          );
+                        },
+                        child: Text(
+                          "Login",
+                          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

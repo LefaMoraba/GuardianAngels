@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Profile",
             onTap: () {
               setState(() {
-                _currentScreen = ProfilePage(); // Navigate to ProfilePage
+                _currentScreen = ProfilePage();
               });
             },
           ),

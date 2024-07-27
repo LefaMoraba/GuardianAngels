@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/sign_up_page.dart';
 import 'package:guardian_angels/pages/welcome_page.dart';
 import 'package:guardian_angels/Decoration/navigation.dart';
+import 'package:amplify_flutter/amplify.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,9 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isSigning = false;
-  bool _obscureText = true, buttonPressed = true;
-  String _emailError = '';
-  String _passwordError = '';
+  bool _obscureText = true;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -30,39 +30,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _obscureText = !_obscureText;
     });
-  }
-
-  void _validateEmail(String email) {
-    if (email.isEmpty) {
-      setState(() {
-        _emailError = 'Email is required';
-      });
-    } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-        .hasMatch(email)) {
-      setState(() {
-        _emailError = 'Enter a valid email address';
-      });
-    } else {
-      setState(() {
-        _emailError = '';
-      });
-    }
-  }
-
-  void _validatePassword(String password) {
-    if (password.isEmpty) {
-      setState(() {
-        _passwordError = 'Password is required';
-      });
-    } else if (password.length < 6) {
-      setState(() {
-        _passwordError = 'Password must be at least 6 characters';
-      });
-    } else {
-      setState(() {
-        _passwordError = '';
-      });
-    }
   }
 
   void _showErrorDialog(String message) {
@@ -83,12 +50,45 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> signIn() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    setState(() {
+      _isSigning = true;
+    });
+
+    try {
+      SignInResult result = await Amplify.Auth.signIn(
+        username: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      if (result.isSignedIn) {
+        print('Sign-in successful');
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => WelcomeScreen()),
+          (route) => false,
+        );
+      } else {
+        print('Sign-in not complete');
+      }
+    } catch (e) {
+      _showErrorDialog('An error occurred during sign-in: $e');
+    } finally {
+      setState(() {
+        _isSigning = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
-        // backgroundColor: Colors.deepOrange, // appbar color.
         foregroundColor: Colors.white,
       ),
       body: Center(
@@ -112,9 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                     "Login",
                     style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 30),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(labelText: 'Email'),
@@ -128,10 +126,6 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
-                  ),
-                  Text(
-                    _emailError,
-                    style: TextStyle(color: Colors.red),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
@@ -149,58 +143,58 @@ class _LoginPageState extends State<LoginPage> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Password is required';
+                      } else if (value.length < 6) {
+                        return 'Password must be at least 6 characters';
                       }
                       return null;
                     },
                   ),
-                  Text(
-                    _passwordError,
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                          MaterialPageRoute(
-                            builder: (context) => HomeScreen()),
-                            (route) => false);
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
+                  SizedBox(height: 20),
+                  if (_isSigning)
+                    CircularProgressIndicator()
+                  else
+                    GestureDetector(
+                      onTap: signIn,
+                      child: Container(
+                        width: double.infinity,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
                           child: Text(
-                        "Login",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )),
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("Don't have an account?"),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      SizedBox(width: 5),
                       GestureDetector(
-                          onTap: () {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpPage()),
-                                (route) => false);
-                          },
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ))
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpPage()),
+                            (route) => false,
+                          );
+                        },
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
                     ],
                   )
                 ],
@@ -211,25 +205,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  /*void _signIn() async {
-    if (_formKey.currentState!.validate()) {
-      String email = _emailController.text;
-      String password = _passwordController.text;
-
-      try {
-        User? user = await _auth.signInWithEmailAndPassword(email, password);
-
-        if (user != null) {
-          print("User was successfully signedIn");
-          Navigator.pushNamed(context, "/home");
-        } else {
-          print("User creation returned null, but no exception was thrown.");
-        }
-      } catch (e) {
-        // Here you catch and display the error
-        _showErrorDialog(e.toString());
-      }
-    }
-  }*/
 }
