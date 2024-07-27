@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Profile",
             onTap: () {
               setState(() {
-                _currentScreen = const ProfileScreen();
+                _currentScreen = ProfilePage();
               });
             },
           ),
