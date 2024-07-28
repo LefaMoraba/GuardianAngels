@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/login_page.dart';
-import 'package:guardian_angels/Decoration/navigation.dart';
-//import 'package:amplify_flutter/amplify.dart';
-//import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:guardian_angels/pages/validation.dart';
 import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -143,7 +141,7 @@ class _SignUpScreenState extends State<SignUpPage> {
       await userPool.signUp(email, password, userAttributes: userAttributes);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => ValidationPage(email: email)),
         (route) => false,
       );
     } catch (e) {

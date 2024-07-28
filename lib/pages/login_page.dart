@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/sign_up_page.dart';
 import 'package:guardian_angels/pages/welcome_page.dart';
-import 'package:amplify_flutter/amplify.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:guardian_angels/Decoration/navigation.dart';
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -49,37 +49,62 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> signIn() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+  final userPool = CognitoUserPool(
+    'us-west-1_S65cJX68p', // Your User Pool ID
+    '5176idlu4cdrdj9vvuv1rc5ip7', // Your Client ID
+  );
 
-    setState(() {
-      _isSigning = true;
-    });
+  Future<void> signIn(String email, String password) async {
+    final cognitoUser = CognitoUser(email, userPool);
+    final authDetails = AuthenticationDetails(
+      username: email,
+      password: password,
+    );
 
     try {
-      SignInResult result = await Amplify.Auth.signIn(
-        username: _emailController.text,
-        password: _passwordController.text,
-      );
-
-      if (result.isSignedIn) {
-        print('Sign-in successful');
+      setState(() {
+        _isSigning = true;
+      });
+      CognitoUserSession? session = await cognitoUser.authenticateUser(authDetails);
+      if (session != null && session.isValid()) {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+          MaterialPageRoute(builder: (context) => HomeScreen()), // Adjust to your actual HomeScreen
           (route) => false,
         );
+        print(session.getAccessToken().getJwtToken());
       } else {
-        print('Sign-in not complete');
+        _showErrorDialog('Failed to login. Please try again.');
       }
+    } on CognitoUserNewPasswordRequiredException catch (e) {
+      // handle New Password challenge
+    } on CognitoUserMfaRequiredException catch (e) {
+      // handle SMS_MFA challenge
+    } on CognitoUserSelectMfaTypeException catch (e) {
+      // handle SELECT_MFA_TYPE challenge
+    } on CognitoUserMfaSetupException catch (e) {
+      // handle MFA_SETUP challenge
+    } on CognitoUserTotpRequiredException catch (e) {
+      // handle SOFTWARE_TOKEN_MFA challenge
+    } on CognitoUserCustomChallengeException catch (e) {
+      // handle CUSTOM_CHALLENGE challenge
+    } on CognitoUserConfirmationNecessaryException catch (e) {
+      // handle User Confirmation Necessary
+    } on CognitoClientException catch (e) {
+      // handle Wrong Username and Password and Cognito Client
+      _showErrorDialog('Incorrect username or password.');
     } catch (e) {
       _showErrorDialog('An error occurred during sign-in: $e');
     } finally {
       setState(() {
         _isSigning = false;
       });
+    }
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      signIn(_emailController.text, _passwordController.text);
     }
   }
 
@@ -153,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                     const CircularProgressIndicator()
                   else
                     GestureDetector(
-                      onTap: signIn,
+                      onTap: _submitForm,
                       child: Container(
                         width: double.infinity,
                         height: 45,
