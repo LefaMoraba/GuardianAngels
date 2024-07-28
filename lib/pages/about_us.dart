@@ -5,8 +5,18 @@ class AboutUsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Four Computer Science students who are tired of crime!'),
+    return const Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Vision', style: TextStyle(fontSize: 15, color: Colors.white)),
+            Text('Mission',
+                style: TextStyle(fontSize: 25, color: Colors.white)),
+          ],
+        ),
+      ),
     );
   }
 }

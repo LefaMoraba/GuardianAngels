@@ -1,13 +1,13 @@
+import 'package:flutter/material.dart';
 import 'dart:html' as html;
 import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Register the view factory
+    // Register the view factory for the HTML map
     ui.platformViewRegistry.registerViewFactory(
       'map-html',
       (int viewId) {
@@ -22,9 +22,36 @@ class WelcomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AWS Location Service Map'),
+        backgroundColor: Colors.orange,
+        title: Text('Where to?'),
       ),
-      body: const HtmlElementView(viewType: 'map-html'),
+      body: Column(
+        children: [
+          Expanded(
+            child: HtmlElementView(viewType: 'map-html'),
+          ),
+          SizedBox(
+            height:40, // Adjust the height if necessary
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Request'),
+                  ),
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text('SOS'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
