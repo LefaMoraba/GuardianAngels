@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/sign_up_page.dart';
 import 'package:guardian_angels/pages/welcome_page.dart';
-import 'package:guardian_angels/Decoration/navigation.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 
@@ -15,8 +14,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isSigning = false;
   bool _obscureText = true;
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -36,11 +35,11 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred'),
+        title: const Text('An Error Occurred'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: Text('Okay'),
+            child: const Text('Okay'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -69,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
         print('Sign-in successful');
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => WelcomeScreen()),
+          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
           (route) => false,
         );
       } else {
@@ -88,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: const Text("Login"),
         foregroundColor: Colors.white,
       ),
       body: Center(
@@ -100,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Welcome To The Guardian Angels App",
                     style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                   ),
@@ -108,14 +107,14 @@ class _LoginPageState extends State<LoginPage> {
                     height: 200,
                     child: Image.asset('assets/b.png'),
                   ),
-                  Text(
+                  const Text(
                     "Login",
                     style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration: const InputDecoration(labelText: 'Email'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Email is required';
@@ -127,15 +126,15 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       suffixIcon: IconButton(
                         icon: _obscureText
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off),
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
                         onPressed: _togglePasswordVisibility,
                       ),
                     ),
@@ -149,9 +148,9 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   if (_isSigning)
-                    CircularProgressIndicator()
+                    const CircularProgressIndicator()
                   else
                     GestureDetector(
                       onTap: signIn,
@@ -162,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             "Login",
                             style: TextStyle(
@@ -176,18 +175,18 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Don't have an account?"),
-                      SizedBox(width: 5),
+                      const Text("Don't have an account?"),
+                      const SizedBox(width: 5),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpPage()),
+                                builder: (context) => const SignUpPage()),
                             (route) => false,
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           "Sign Up",
                           style: TextStyle(
                             color: Colors.blue,

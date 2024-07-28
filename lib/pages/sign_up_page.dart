@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/login_page.dart';
-import 'package:guardian_angels/pages/welcome_page.dart';
 import 'package:guardian_angels/Decoration/navigation.dart';
 //import 'package:amplify_flutter/amplify.dart';
 //import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amazon_cognito_identity_dart_2/cognito.dart';
-import 'package:amazon_cognito_identity_dart_2/sig_v4.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -110,11 +108,11 @@ class _SignUpScreenState extends State<SignUpPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred'),
+        title: const Text('An Error Occurred'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: Text('Okay'),
+            child: const Text('Okay'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -145,7 +143,7 @@ class _SignUpScreenState extends State<SignUpPage> {
       await userPool.signUp(email, password, userAttributes: userAttributes);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
         (route) => false,
       );
     } catch (e) {
@@ -163,7 +161,7 @@ class _SignUpScreenState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up Page'),
+        title: const Text('Sign Up Page'),
         foregroundColor: Colors.white,
       ),
       body: Center(
@@ -175,7 +173,7 @@ class _SignUpScreenState extends State<SignUpPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Welcome To The Guardian Angels App",
                     style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                   ),
@@ -183,13 +181,13 @@ class _SignUpScreenState extends State<SignUpPage> {
                     height: 200,
                     child: Image.asset('assets/b.png'),
                   ),
-                  Text(
+                  const Text(
                     "Sign Up",
                     style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                   ),
                   TextFormField(
                     controller: _fNameController,
-                    decoration: InputDecoration(labelText: 'First Name'),
+                    decoration: const InputDecoration(labelText: 'First Name'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'First Name is required';
@@ -203,12 +201,12 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   Text(
                     _fNameError,
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: _lNameController,
-                    decoration: InputDecoration(labelText: 'Last Name'),
+                    decoration: const InputDecoration(labelText: 'Last Name'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Last name is required';
@@ -222,12 +220,12 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   Text(
                     _lNameError,
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration: const InputDecoration(labelText: 'Email'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Email is required';
@@ -239,15 +237,15 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   Text(
                     _emailError,
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       suffixIcon: IconButton(
-                        icon: _obscureText ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                        icon: _obscureText ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
                         onPressed: _togglePasswordVisibility,
                       ),
                     ),
@@ -263,9 +261,9 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   Text(
                     _passwordError,
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   GestureDetector(
                     onTap: _submitForm,
                     child: Container(
@@ -275,7 +273,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Sign Up",
                           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -283,21 +281,21 @@ class _SignUpScreenState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account?"),
-                      SizedBox(width: 5),
+                      const Text("Already have an account?"),
+                      const SizedBox(width: 5),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginPage()),
+                            MaterialPageRoute(builder: (context) => const LoginPage()),
                             (route) => false,
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           "Login",
                           style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                         ),

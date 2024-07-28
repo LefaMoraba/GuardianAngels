@@ -22,9 +22,9 @@ class WelcomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('AWS Location Service Map'),
+        title: const Text('AWS Location Service Map'),
       ),
-      body: HtmlElementView(viewType: 'map-html'),
+      body: const HtmlElementView(viewType: 'map-html'),
     );
   }
 }

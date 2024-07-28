@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
 @override
   void initState() {
     Future.delayed(
-      Duration(seconds: 1),(){
+      const Duration(seconds: 1),(){
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => widget.child!), (route) => false);
     }
     );
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 300,
               child: Image.asset('assets/b.png'),
             ),
-            Text('Making the world a safer place', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),)
+            const Text('Making the world a safer place', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),)
           ],
         ),
 

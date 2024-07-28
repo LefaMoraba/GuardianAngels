@@ -32,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                           MaterialPageRoute(
-                            builder: (context) => GaurdianSignUp()),
+                            builder: (context) => const GaurdianSignUp()),
                             (route) => false);
                     },
                     child: Container(
@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(
+                      child: const Center(
                           child: Text(
                         "Sign up to be Gaurdian",
                         style: TextStyle(

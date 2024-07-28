@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -16,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -27,30 +29,30 @@ class _ProfilePageState extends State<ProfilePage> {
               labelText: 'First Name',
               icon: Icons.person,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             _buildTextField(
               controller: _lastNameController,
               labelText: 'Last Name',
               icon: Icons.person_outline,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             _buildTextField(
               controller: _emailController,
               labelText: 'Email',
               icon: Icons.email,
               keyboardType: TextInputType.emailAddress,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             _buildTextField(
               controller: _passwordController,
               labelText: 'Password',
               icon: Icons.lock,
               obscureText: true,
             ),
-            SizedBox(height: 32.0),
+            const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: _saveProfile,
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),
@@ -70,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
       decoration: InputDecoration(
         labelText: labelText,
         prefixIcon: Icon(icon),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
       obscureText: obscureText,
       keyboardType: keyboardType,

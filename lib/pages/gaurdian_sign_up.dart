@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(GaurdianSignUp());
+  runApp(const GaurdianSignUp());
 }
 
 class GaurdianSignUp extends StatefulWidget {
@@ -57,7 +57,7 @@ class _GaurduanScreenState extends State<GaurdianSignUp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Sign Up to be a Guardian'),
+          title: const Text('Sign Up to be a Guardian'),
           foregroundColor: Colors.white,
         ),
         body: Center(
@@ -69,7 +69,7 @@ class _GaurduanScreenState extends State<GaurdianSignUp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Welcome To The Guardian Angels App",
                       style:
                           TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
@@ -78,20 +78,20 @@ class _GaurduanScreenState extends State<GaurdianSignUp> {
                       height: 200,
                       child: Image.asset('assets/b.png'),
                     ),
-                    Text(
+                    const Text(
                       "Sign Up to be a Guardian",
                       style:
                           TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                     ),
-                    Text(
+                    const Text(
                       "We need your ID number to run a background check to ensure the safety of our patrons.",
                       style: TextStyle(color: Colors.red),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: _idController,
-                      decoration: InputDecoration(labelText: 'ID Number'),
+                      decoration: const InputDecoration(labelText: 'ID Number'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'ID number is required';
@@ -107,18 +107,18 @@ class _GaurduanScreenState extends State<GaurdianSignUp> {
                     ),
                     Text(
                       _idError,
-                      style: TextStyle(color: Colors.red),
+                      style: const TextStyle(color: Colors.red),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: _skillsController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           labelText: 'Skills (comma separated)'),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _submitForm,
-                      child: Text('Submit'),
+                      child: const Text('Submit'),
                     ),
                   ],
                 ),

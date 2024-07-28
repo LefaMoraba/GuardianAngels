@@ -4,13 +4,15 @@ import 'package:guardian_angels/pages/sign_up_page.dart';
 import 'package:guardian_angels/features/splash_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
   //print("Configuring Amplify"); 
   //configureAmplify(); 
   //print("Configured Amplify"); 
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,12 +27,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => SplashScreen(
+        '/': (context) => const SplashScreen(
               // Here, you can decide whether to show the LoginPage or HomePage based on user authentication
               child: LoginPage(),
             ),
-        '/login': (context) => LoginPage(),
-        '/signUp': (context) => SignUpPage()
+        '/login': (context) => const LoginPage(),
+        '/signUp': (context) => const SignUpPage()
       },
     );
   }

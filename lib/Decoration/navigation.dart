@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Widget _currentScreen =  WelcomeScreen(); // Default screen is the WelcomeScreen
+  Widget _currentScreen =  const WelcomeScreen(); // Default screen is the WelcomeScreen
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Home",
             onTap: () {
               setState(() {
-                _currentScreen =  WelcomeScreen(); // Navigate to WelcomeScreen
+                _currentScreen =  const WelcomeScreen(); // Navigate to WelcomeScreen
               });
             },
           ),
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Profile",
             onTap: () {
               setState(() {
-                _currentScreen = ProfilePage();
+                _currentScreen = const ProfilePage();
               });
             },
           ),
