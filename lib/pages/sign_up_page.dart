@@ -127,8 +127,8 @@ class _SignUpScreenState extends State<SignUpPage> {
   }
 
   final userPool = CognitoUserPool(
-    'us-west-1_S65cJX68p',
-    '5176idlu4cdrdj9vvuv1rc5ip7',
+    'us-east-1_tAiq6T7yb',
+    '2ijodv5rg6ol780r31ejsjsgv4',
   );
 
   Future<void> signup(String name, String surname, String email, String password) async {

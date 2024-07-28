@@ -50,8 +50,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   final userPool = CognitoUserPool(
-    'us-west-1_S65cJX68p', // Your User Pool ID
-    '5176idlu4cdrdj9vvuv1rc5ip7', // Your Client ID
+    'us-east-1_tAiq6T7yb', // Your User Pool ID
+    '2ijodv5rg6ol780r31ejsjsgv4', // Your Client ID
   );
 
   Future<void> signIn(String email, String password) async {

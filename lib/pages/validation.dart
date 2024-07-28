@@ -43,8 +43,8 @@ class _ValidationPageState extends State<ValidationPage> {
   }
 
   final userPool = CognitoUserPool(
-    'us-west-1_S65cJX68p',
-    '5176idlu4cdrdj9vvuv1rc5ip7',
+    'us-east-1_tAiq6T7yb',
+    '2ijodv5rg6ol780r31ejsjsgv4',
   );
 
   Future<void> Varify(String email, String OTP) async {
