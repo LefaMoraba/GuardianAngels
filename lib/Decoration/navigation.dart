@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text: "Guardian Programme",
             onTap: () {
               setState(() {
-                _currentScreen = const GaurdianSignUp(); // Navigate to GaurdianSignUp
+                _currentScreen = const GuardianSignUpPage(); // Navigate to GaurdianSignUp
               });
             },
           ),

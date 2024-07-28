@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardian_angels/pages/sign_up_page.dart';
-import 'package:guardian_angels/pages/welcome_page.dart';
+//import 'package:guardian_angels/pages/welcome_page.dart';
 import 'package:guardian_angels/Decoration/navigation.dart';
 import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 
