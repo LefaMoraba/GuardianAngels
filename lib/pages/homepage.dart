@@ -23,11 +23,11 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
-        title: Text('Where to?'),
+        title: const Text('Where to?'),
       ),
       body: Column(
         children: [
-          Expanded(
+          const Expanded(
             child: HtmlElementView(viewType: 'map-html'),
           ),
           SizedBox(

@@ -1,26 +1,64 @@
-<html>
-  <head>
-    <link href="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.css" rel="stylesheet" />
-    <style>
-      body { margin: 0; }
-      #map { height: 100vh; }
-    </style>
-  </head>
-  <body>
-    <div id="map" />
-    <script src="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.js"></script>
-    <script>
-      const apiKey = "v1.public.eyJqdGkiOiJlMDFjNTlmZi1iMDQ0LTRkNTctOTFmMi0wMDQzZjA5Y2ZjNjIifSMHWOQwor-91Ctjf_xnqmpC6b3YX34ds3MPi2dqZt1EQK33nig-E9dnaCFR2o79ygfp8Ab3aC1nR8Lr8FYhjZ-PeeTtuD1yI7a0hQ1ehGFbp7ccgihAKGgiULsnr3Qzot4jQBQDFOJHt4jgKNvwD7PYAHYPL8HL_1kJo-qJ_k7xc5ckJ3HbderDfUDxyrmmLGO-H9THY9Fhz4S6aN_xmHU8FGRG611wcslj4dLWcvulf-_xprQu6olgxtgXJZRKgrjisbwwQuaoq5IEs7nIO8NvdpfpaMtjW6WndE4w0r8QCeIOk3mDNV6TRCHtF0hONyJ4UtLT5bah6gys1CaYAdA.ZWU0ZWIzMTktMWRhNi00Mzg0LTllMzYtNzlmMDU3MjRmYTkx";
-      const mapName = "Map";
-      const region = "us-east-1";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    body { margin: 0; }
+    #map { height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.js"></script>
+  <script>
+    const apiKey = "v1.public.eyJqdGkiOiJlMDFjNTlmZi1iMDQ0LTRkNTctOTFmMi0wMDQzZjA5Y2ZjNjIifSMHWOQwor-91Ctjf_xnqmpC6b3YX34ds3MPi2dqZt1EQK33nig-E9dnaCFR2o79ygfp8Ab3aC1nR8Lr8FYhjZ-PeeTtuD1yI7a0hQ1ehGFbp7ccgihAKGgiULsnr3Qzot4jQBQDFOJHt4jgKNvwD7PYAHYPL8HL_1kJo-qJ_k7xc5ckJ3HbderDfUDxyrmmLGO-H9THY9Fhz4S6aN_xmHU8FGRG611wcslj4dLWcvulf-_xprQu6olgxtgXJZRKgrjisbwwQuaoq5IEs7nIO8NvdpfpaMtjW6WndE4w0r8QCeIOk3mDNV6TRCHtF0hONyJ4UtLT5bah6gys1CaYAdA.ZWU0ZWIzMTktMWRhNi00Mzg0LTllMzYtNzlmMDU3MjRmYTkx";
+    const mapName = "Map";
+    const region = "us-east-1";
 
-      const map = new maplibregl.Map({
-        container: "map",
-        style: `https://maps.geo.${region}.amazonaws.com/maps/v0/maps/${mapName}/style-descriptor?key=${apiKey}`,
-        center: [-123.115898, 49.295868],
-        zoom: 11,
+    const map = new maplibregl.Map({
+      container: "map",
+      style: `https://maps.geo.${region}.amazonaws.com/maps/v0/maps/${mapName}/style-descriptor?key=${apiKey}`,
+      center: [-123.115898, 49.295868], // Initial center (will be updated)
+      zoom: 11,
+    });
+
+    map.addControl(new maplibregl.NavigationControl(), "top-left");
+
+    // Sample data for pins (replace with real data)
+    const locations = [
+      { lng: -123.1207, lat: 49.2827, name: "Location 1" },
+      { lng: -123.1162, lat: 49.2908, name: "Location 2" },
+      { lng: -123.1139, lat: 49.2978, name: "Location 3" }
+    ];
+
+    locations.forEach(location => {
+      new maplibregl.Marker()
+        .setLngLat([location.lng, location.lat])
+        .setPopup(new maplibregl.Popup({ offset: 25 }) // Add popups
+        .setText(location.name))
+        .addTo(map);
+    });
+
+    // Use the Geolocation API to get the user's location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const userLocation = [position.coords.longitude, position.coords.latitude];
+        // Center the map on the user's location
+        map.setCenter(userLocation);
+        map.setZoom(15); // Adjust zoom level as needed
+        // Add a marker for the user's location
+        new maplibregl.Marker({ color: "blue" })
+          .setLngLat(userLocation)
+          .setPopup(new maplibregl.Popup({ offset: 25 }).setText("You are here"))
+          .addTo(map);
+      }, error => {
+        console.error("Error getting user location:", error);
+        // Handle error (e.g., show a message to the user)
       });
-      map.addControl(new maplibregl.NavigationControl(), "top-left");
-    </script>
-  </body>
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+      // Handle lack of support (e.g., show a message to the user)
+    }
+  </script>
+</body>
 </html>
