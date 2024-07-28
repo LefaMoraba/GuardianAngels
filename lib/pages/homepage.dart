@@ -3,10 +3,30 @@ import 'package:guardian_angels/pages/gaurdians.dart';
 import 'dart:html' as html;
 //import 'dart:ui' as ui;
 import 'dart:ui_web' as ui2;
+import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
+Future<void> sendEmail() async {
+    final String subject = 'Emergency';
+    final String body = 'Please help!!!';
+    final String recipients = 'lefamoraba5751@gmail.com';
+    final String cc = 'lukhonaxulu87@gmail.com';
+    final String bcc = '2346902@students.wits.ac.za';
+
+    final String mailtoLink = Uri(
+      scheme: 'mailto',
+      path: recipients,
+      query: 'subject=$subject&body=$body&cc=$cc&bcc=$bcc',
+    ).toString();
+
+    if (await canLaunch(mailtoLink)) {
+      await launch(mailtoLink);
+    } else {
+      throw 'Could not launch $mailtoLink';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     // Register the view factory for the HTML map
@@ -50,7 +70,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: sendEmail,
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.pink.shade100),
                     child: const Text('SOS'),
                   ),
