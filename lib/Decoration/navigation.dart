@@ -4,8 +4,7 @@ import 'package:guardian_angels/pages/about_us.dart';
 import 'package:guardian_angels/pages/donation.dart';
 import 'package:guardian_angels/pages/gaurdian_sign_up.dart';
 import 'package:guardian_angels/pages/homepage.dart';
-import 'package:guardian_angels/pages/profile.dart';
-//import 'package:guardian_angels/pages/welcome_screen.dart'; // Import the new WelcomeScreen
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final sw = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 214, 187, 196),
       appBar: AdaptiveNavBar(
         screenWidth: sw,
         title: const Text("Guardian Angels"),
@@ -39,14 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {
               setState(() {
                 _currentScreen = const GuardianSignUpPage(); // Navigate to GaurdianSignUp
-              });
-            },
-          ),
-          NavBarItem(
-            text: "Profile",
-            onTap: () {
-              setState(() {
-                _currentScreen = const ProfilePage();
               });
             },
           ),

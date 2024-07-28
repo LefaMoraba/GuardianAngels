@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Guardian Angels',
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,  // Set the primary color to deep orange
+        primarySwatch: Colors.pink,  
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.deepOrange,  // Set the ElevatedButton color to deep orange
+          backgroundColor: Colors.pink,  
           ),
         ),
       ),

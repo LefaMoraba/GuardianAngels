@@ -22,8 +22,9 @@ class WelcomeScreen extends StatelessWidget {
     );
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 214, 187, 196),
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.pink.shade100,
         title: const Text('Where to?'),
       ),
       body: Column(
@@ -38,12 +39,14 @@ class WelcomeScreen extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {},
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.pink.shade100),
                     child: const Text('Request'),
                   ),
                 ),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {},
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.pink.shade100),
                     child: const Text('SOS'),
                   ),
                 ),

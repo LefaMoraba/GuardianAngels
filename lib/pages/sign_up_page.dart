@@ -158,10 +158,7 @@ class _SignUpScreenState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign Up Page'),
-        foregroundColor: Colors.white,
-      ),
+      backgroundColor: Color.fromARGB(255, 214, 187, 196),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -177,7 +174,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   SizedBox(
                     height: 200,
-                    child: Image.asset('assets/b.png'),
+                    child: Image.asset('assets/White shield 2.jpg'),
                   ),
                   const Text(
                     "Sign Up",
@@ -199,7 +196,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   Text(
                     _fNameError,
-                    style: const TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -218,7 +215,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   Text(
                     _lNameError,
-                    style: const TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -235,7 +232,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   Text(
                     _emailError,
-                    style: const TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -259,7 +256,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                   ),
                   Text(
                     _passwordError,
-                    style: const TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 20),
                   GestureDetector(
@@ -268,13 +265,13 @@ class _SignUpScreenState extends State<SignUpPage> {
                       width: double.infinity,
                       height: 45,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Center(
                         child: Text(
                           "Sign Up",
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -295,7 +292,7 @@ class _SignUpScreenState extends State<SignUpPage> {
                         },
                         child: const Text(
                           "Login",
-                          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],

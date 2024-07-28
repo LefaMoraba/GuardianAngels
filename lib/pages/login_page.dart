@@ -111,10 +111,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-        foregroundColor: Colors.white,
-      ),
+      backgroundColor: Color.fromARGB(255, 214, 187, 196),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -130,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(
                     height: 200,
-                    child: Image.asset('assets/b.png'),
+                    child: Image.asset('assets/White shield 2.jpg'),
                   ),
                   const Text(
                     "Login",
@@ -183,14 +180,14 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         height: 45,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Center(
                           child: Text(
                             "Login",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -214,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: const Text(
                           "Sign Up",
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
