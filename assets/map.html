@@ -14,6 +14,7 @@
     const apiKey = "v1.public.eyJqdGkiOiJlMDFjNTlmZi1iMDQ0LTRkNTctOTFmMi0wMDQzZjA5Y2ZjNjIifSMHWOQwor-91Ctjf_xnqmpC6b3YX34ds3MPi2dqZt1EQK33nig-E9dnaCFR2o79ygfp8Ab3aC1nR8Lr8FYhjZ-PeeTtuD1yI7a0hQ1ehGFbp7ccgihAKGgiULsnr3Qzot4jQBQDFOJHt4jgKNvwD7PYAHYPL8HL_1kJo-qJ_k7xc5ckJ3HbderDfUDxyrmmLGO-H9THY9Fhz4S6aN_xmHU8FGRG611wcslj4dLWcvulf-_xprQu6olgxtgXJZRKgrjisbwwQuaoq5IEs7nIO8NvdpfpaMtjW6WndE4w0r8QCeIOk3mDNV6TRCHtF0hONyJ4UtLT5bah6gys1CaYAdA.ZWU0ZWIzMTktMWRhNi00Mzg0LTllMzYtNzlmMDU3MjRmYTkx";
     const mapName = "Map";
     const region = "us-east-1";
+    let usermarker; //storing current user's live location
 
     const map = new maplibregl.Map({
       container: "map",
@@ -46,11 +47,25 @@
         // Center the map on the user's location
         map.setCenter(userLocation);
         map.setZoom(15); // Adjust zoom level as needed
+
         // Add a marker for the user's location
-        new maplibregl.Marker({ color: "blue" })
+        userMarker = new maplibregl.Marker({ color: "blue" })
           .setLngLat(userLocation)
           .setPopup(new maplibregl.Popup({ offset: 25 }).setText("You are here"))
           .addTo(map);
+
+        // Fetch and add nearby users within 10m
+        fetch(`/api/nearby-users?lat=${position.coords.latitude}&lng=${position.coords.longitude}&radius=10`)
+          .then(response => response.json())
+          .then(nearbyUsers => {
+            nearbyUsers.forEach(user => {
+              new maplibregl.Marker({ color: "red" }) // Markers for nearby users
+                .setLngLat([user.lng, user.lat])
+                .setPopup(new maplibregl.Popup({ offset: 25 }).setText(user.name))
+                .addTo(map);
+            });
+          })
+          .catch(error => console.error("Error fetching nearby users:", error));
       }, error => {
         console.error("Error getting user location:", error);
         // Handle error (e.g., show a message to the user)

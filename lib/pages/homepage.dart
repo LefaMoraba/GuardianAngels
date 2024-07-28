@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
-import 'dart:ui' as ui;
+//import 'dart:ui' as ui;
+import 'dart:ui_web' as ui2;
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -8,7 +9,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Register the view factory for the HTML map
-    ui.platformViewRegistry.registerViewFactory(
+    ui2.platformViewRegistry.registerViewFactory(
       'map-html',
       (int viewId) {
         final iframe = html.IFrameElement()
@@ -37,13 +38,13 @@ class WelcomeScreen extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: Text('Request'),
+                    child: const Text('Request'),
                   ),
                 ),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: Text('SOS'),
+                    child: const Text('SOS'),
                   ),
                 ),
               ],
